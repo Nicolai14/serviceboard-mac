@@ -4,6 +4,8 @@ Native macOS app for the ServerFlow/Laravel dashboard. It shows the dashboard
 UI as a WebView in its own Mac window and adds native navigation plus a menu bar
 item with server load.
 
+![DashboardFlow Mac – Flow Map](docs/flow-map.png)
+
 ## Requirements
 
 - macOS 13 or newer
