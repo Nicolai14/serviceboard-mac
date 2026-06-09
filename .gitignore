@@ -1,0 +1,5 @@
+# Build-Artefakte
+build/
+
+# macOS
+.DS_Store
