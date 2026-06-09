@@ -1,5 +1,9 @@
 # Build-Artefakte
 build/
 
+# Lokale Konfiguration (enthält die echte Produktions-URL)
+.env
+Sources/DashboardFlowMac/GeneratedConfig.swift
+
 # macOS
 .DS_Store

@@ -9,6 +9,19 @@ eine native Navigation und ein Menüleisten-Symbol mit Server-Auslastung.
 - macOS 13 oder neuer
 - Xcode oder die Xcode Command Line Tools (`xcode-select --install`) – stellt `swiftc` bereit
 
+## Konfiguration
+
+Die Produktions-URL des Dashboards wird nicht im Code gespeichert, sondern aus
+einer lokalen `.env` gelesen (nicht eingecheckt). Vor dem ersten Build:
+
+```bash
+cp .env.example .env
+# .env öffnen und PRODUCTION_BASE_URL auf die eigene Dashboard-URL setzen
+```
+
+`build.sh` liest die `.env` und erzeugt daraus die benötigte Swift-Konfiguration.
+Ohne `.env` wird auf die Platzhalter-URL aus `.env.example` zurückgegriffen.
+
 ## Build
 
 ```bash
@@ -32,8 +45,8 @@ open build/DashboardFlow.app
 - WebView-Wrapper für die Routen Dashboard, Workflow, Server, Docker,
   Cloudflare, Kosten, Alerts und Profil in einem nativen Mac-Fenster
 - Native **Flow Map** mit einer Übersicht über die DashboardFlow-Architektur
-- Umgebungs-Umschalter in der Toolbar: **Production**
-  (`https://serverflow.careflow-pflege.de`), **Lokal :8000** und **Lokal :8080**
+- Umgebungs-Umschalter in der Toolbar: **Production** (aus `.env` konfiguriert),
+  **Lokal :8000** und **Lokal :8080**
 - Menüleisten-Symbol mit kompakter CPU-/RAM-/Disk-Übersicht für alle Server
   (Label `DF`)
 - Eigenes DashboardFlow-App-Icon

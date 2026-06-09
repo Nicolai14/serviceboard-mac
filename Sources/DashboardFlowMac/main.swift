@@ -614,11 +614,11 @@ struct DashboardWebView: NSViewRepresentable {
 struct ContentView: View {
     @State private var route: DashboardRoute = .flowMap
     @StateObject private var webModel = WebViewModel()
-    @AppStorage("baseURL") private var baseURL = "https://serverflow.careflow-pflege.de"
+    @AppStorage("baseURL") private var baseURL = AppConfig.productionBaseURL
 
     private var targetURL: URL {
         let trimmedBase = baseURL.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
-        return URL(string: trimmedBase + route.path) ?? URL(string: "https://serverflow.careflow-pflege.de/dashboard")!
+        return URL(string: trimmedBase + route.path) ?? URL(string: AppConfig.productionBaseURL + "/dashboard")!
     }
 
     var body: some View {
@@ -665,7 +665,7 @@ struct ContentView: View {
 
             ToolbarItemGroup(placement: .primaryAction) {
                 Picker("Instanz", selection: $baseURL) {
-                    Text("Production").tag("https://serverflow.careflow-pflege.de")
+                    Text("Production").tag(AppConfig.productionBaseURL)
                     Text("Lokal :8000").tag("http://127.0.0.1:8000")
                     Text("Lokal :8080").tag("http://127.0.0.1:8080")
                 }
@@ -793,7 +793,7 @@ struct FlowStepCard: View {
 struct ServerLoadMenuView: View {
     @EnvironmentObject var monitor: ServerLoadMonitor
     @EnvironmentObject var aiMonitor: AIUsageMonitor
-    @AppStorage("baseURL") private var baseURL = "https://serverflow.careflow-pflege.de"
+    @AppStorage("baseURL") private var baseURL = AppConfig.productionBaseURL
     @AppStorage("apiEmail") private var apiEmail = ""
     @AppStorage("apiToken") private var apiToken = ""
     @StateObject private var limitWebModel = WebViewModel()

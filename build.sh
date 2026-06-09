@@ -26,9 +26,28 @@ mkdir -p "$APP_DIR/Contents/MacOS"
 mkdir -p "$APP_DIR/Contents/Resources"
 mkdir -p "$MODULE_CACHE"
 
+echo "    Konfiguration aus .env laden ..."
+ENV_FILE="$ROOT/.env"
+if [ ! -f "$ENV_FILE" ]; then
+  echo "    Hinweis: keine .env gefunden, verwende .env.example (Platzhalter-URL)."
+  ENV_FILE="$ROOT/.env.example"
+fi
+# shellcheck disable=SC1090
+set -a; . "$ENV_FILE"; set +a
+PRODUCTION_BASE_URL="${PRODUCTION_BASE_URL:-https://dashboard.example.com}"
+
+GENERATED_CONFIG="$ROOT/Sources/DashboardFlowMac/GeneratedConfig.swift"
+cat > "$GENERATED_CONFIG" <<SWIFT
+// Automatisch von build.sh aus .env erzeugt. Nicht versionieren, nicht bearbeiten.
+enum AppConfig {
+    static let productionBaseURL = "$PRODUCTION_BASE_URL"
+}
+SWIFT
+
 echo "2/5 Swift-App kompilieren ..."
 swiftc \
   "$ROOT/Sources/DashboardFlowMac/main.swift" \
+  "$GENERATED_CONFIG" \
   -o "$EXECUTABLE" \
   -parse-as-library \
   -module-cache-path "$MODULE_CACHE" \
