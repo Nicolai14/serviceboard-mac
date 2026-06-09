@@ -1,26 +1,26 @@
 # DashboardFlow Mac
 
-Native macOS-App für das ServerFlow/Laravel-Dashboard. Sie zeigt die
-Dashboard-Oberfläche als WebView in einem eigenen Mac-Fenster und ergänzt sie um
-eine native Navigation und ein Menüleisten-Symbol mit Server-Auslastung.
+Native macOS app for the ServerFlow/Laravel dashboard. It shows the dashboard
+UI as a WebView in its own Mac window and adds native navigation plus a menu bar
+item with server load.
 
-## Voraussetzungen
+## Requirements
 
-- macOS 13 oder neuer
-- Xcode oder die Xcode Command Line Tools (`xcode-select --install`) – stellt `swiftc` bereit
+- macOS 13 or newer
+- Xcode or the Xcode Command Line Tools (`xcode-select --install`) – provides `swiftc`
 
-## Konfiguration
+## Configuration
 
-Die Produktions-URL des Dashboards wird nicht im Code gespeichert, sondern aus
-einer lokalen `.env` gelesen (nicht eingecheckt). Vor dem ersten Build:
+The dashboard's production URL is not stored in the code; it is read from a
+local `.env` file (not checked in). Before the first build:
 
 ```bash
 cp .env.example .env
-# .env öffnen und PRODUCTION_BASE_URL auf die eigene Dashboard-URL setzen
+# Open .env and set PRODUCTION_BASE_URL to your own dashboard URL
 ```
 
-`build.sh` liest die `.env` und erzeugt daraus die benötigte Swift-Konfiguration.
-Ohne `.env` wird auf die Platzhalter-URL aus `.env.example` zurückgegriffen.
+`build.sh` reads the `.env` and generates the required Swift configuration from
+it. Without a `.env`, it falls back to the placeholder URL from `.env.example`.
 
 ## Build
 
@@ -28,41 +28,40 @@ Ohne `.env` wird auf die Platzhalter-URL aus `.env.example` zurückgegriffen.
 ./build.sh
 ```
 
-Das fertige App-Bundle liegt danach unter:
+The finished app bundle is then located at:
 
 ```text
 build/DashboardFlow.app
 ```
 
-Starten mit:
+Launch it with:
 
 ```bash
 open build/DashboardFlow.app
 ```
 
-## Funktionen
+## Features
 
-- WebView-Wrapper für die Routen Dashboard, Workflow, Server, Docker,
-  Cloudflare, Kosten, Alerts und Profil in einem nativen Mac-Fenster
-- Native **Flow Map** mit einer Übersicht über die DashboardFlow-Architektur
-- Umgebungs-Umschalter in der Toolbar: **Production** (aus `.env` konfiguriert),
-  **Lokal :8000** und **Lokal :8080**
-- Menüleisten-Symbol mit kompakter CPU-/RAM-/Disk-Übersicht für alle Server
-  (Label `DF`)
-- Eigenes DashboardFlow-App-Icon
+- WebView wrapper for the Dashboard, Workflow, Server, Docker, Cloudflare,
+  Costs, Alerts and Profile routes in a single native Mac window
+- Native **Flow Map** with an overview of the DashboardFlow architecture
+- Environment switcher in the toolbar: **Production** (configured via `.env`),
+  **Local :8000** and **Local :8080**
+- Menu bar item with a compact CPU/RAM/Disk overview for all servers
+  (label `DF`)
+- Custom DashboardFlow app icon
 
-## Menüleiste: Server-Auslastung
+## Menu bar: server load
 
-Klick auf das Server-/Gauge-Symbol in der macOS-Menüleiste. Beim ersten Mal
-meldest du dich mit deiner ServerFlow-E-Mail und deinem Passwort an; daraus wird
-ein Sanctum-API-Token erstellt. Das Token wird lokal in den App-Einstellungen
-gespeichert, und der Popover aktualisiert die Server-Auslastung alle 60 Sekunden,
-solange die App läuft.
+Click the server/gauge symbol in the macOS menu bar. On first use, sign in with
+your ServerFlow email and password; this creates a Sanctum API token. The token
+is stored locally in the app preferences, and the popover refreshes server load
+every 60 seconds while the app is running.
 
-Ist das Menüleisten-Symbol nicht sichtbar, beende eine bereits laufende
-DashboardFlow-Instanz und öffne die neu gebaute App erneut.
+If the menu bar item is not visible, quit any already running DashboardFlow
+instance and open the freshly built app again.
 
-## Lokale Nutzung
+## Local usage
 
-Laravel lokal starten und dann in der Toolbar **Lokal :8000** oder
-**Lokal :8080** auswählen.
+Start Laravel locally, then pick **Local :8000** or **Local :8080** in the
+toolbar.
